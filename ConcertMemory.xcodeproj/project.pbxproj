@@ -102,6 +102,7 @@
 				EF14E0332D787E8A008424D6 /* Sources */,
 				EF14E0342D787E8A008424D6 /* Frameworks */,
 				EF14E0352D787E8A008424D6 /* Resources */,
+				EF14E0692D7886A3008424D6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -230,6 +231,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EF14E0692D7886A3008424D6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [[ -z \"$CI\" ]]; then\n    if [[ \"$(uname -m)\" == arm64 ]]; then\n        export PATH=\"/opt/homebrew/bin:$PATH\"\n    fi\n\n    # Check if running in a SwiftUI preview\n    if [ \"$XCODE_RUNNING_FOR_PREVIEWS\" != \"1\" ]; then\n        if which swiftlint > /dev/null; then\n            swiftlint --fix && swiftlint # Uncomment if you want to auto-fix: \n        else\n            echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n        fi\n    fi\nelse \n    # Running Xcode Cloud\n    echo \"Running in Xcode Cloud. Skipping SwiftLint.\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EF14E0332D787E8A008424D6 /* Sources */ = {
@@ -399,6 +422,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ConcertMemory/Preview Content\"";
 				DEVELOPMENT_TEAM = K5RDJHKFJK;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Concert Memory";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -436,6 +460,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ConcertMemory/Preview Content\"";
 				DEVELOPMENT_TEAM = K5RDJHKFJK;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Concert Memory";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
