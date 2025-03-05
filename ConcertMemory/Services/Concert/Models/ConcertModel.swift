@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct ConcertModel {
+struct ConcertModel: Hashable {
     let concertId: String
     let artist: String?
     let subtitle: String?
