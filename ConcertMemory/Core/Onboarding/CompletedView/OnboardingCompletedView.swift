@@ -8,6 +8,7 @@ import SwiftUI
 
 struct OnboardingCompletedView: View {
     
+    @State private var isCompletingProfileSetup: Bool = false
     @Environment(AppState.self) private var root
     
     var body: some View {
@@ -18,6 +19,7 @@ struct OnboardingCompletedView: View {
             
         }
         .padding(16)
+        .toolbar(.hidden, for: .navigationBar)
     }
     
     private var introSection: some View {
@@ -42,13 +44,28 @@ struct OnboardingCompletedView: View {
         Button {
             onFinishButtonPressed()
         } label: {
-            Text("Finish")
+            ZStack {
+                if isCompletingProfileSetup {
+                    ProgressView()
+                        .tint(.white)
+                } else {
+                    Text("Finish")
+                }
+            }
                 .callToActionButton()
         }
+        .disabled(isCompletingProfileSetup)
     }
     
     func onFinishButtonPressed() {
-        root.updateViewState(showTabBarView: true)
+        // save user profile
+        isCompletingProfileSetup = true
+        Task {
+            try await Task.sleep(for: .seconds(3))
+            isCompletingProfileSetup = false
+            root.updateViewState(showTabBarView: true)
+            
+        }
     }
     
 }
