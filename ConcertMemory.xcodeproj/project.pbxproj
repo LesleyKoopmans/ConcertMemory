@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EF14E0942D78A433008424D6 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = EF14E0932D78A433008424D6 /* SDWebImageSwiftUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		EF14E0482D787E8B008424D6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF14E0942D78A433008424D6 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +118,7 @@
 			);
 			name = ConcertMemory;
 			packageProductDependencies = (
+				EF14E0932D78A433008424D6 /* SDWebImageSwiftUI */,
 			);
 			productName = ConcertMemory;
 			productReference = EF14E0372D787E8A008424D6 /* ConcertMemory.app */;
@@ -196,6 +202,9 @@
 			);
 			mainGroup = EF14E02E2D787E8A008424D6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EF14E0922D78A433008424D6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EF14E0382D787E8A008424D6 /* Products */;
 			projectDirPath = "";
@@ -599,6 +608,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EF14E0922D78A433008424D6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EF14E0932D78A433008424D6 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF14E0922D78A433008424D6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EF14E02F2D787E8A008424D6 /* Project object */;
 }

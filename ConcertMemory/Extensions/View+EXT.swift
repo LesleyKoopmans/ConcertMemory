@@ -1,5 +1,5 @@
 //
-//  Button+EXT.swift
+//  View+EXT.swift
 //  ConcertMemory
 //
 //  Created by Lesley Koopmans on 05/03/2025.
@@ -15,5 +15,10 @@ extension View {
             .frame(height: 55)
             .background(.accent)
             .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+    
+    func tappableBackground() -> some View {
+        self
+            .background(Color.black.opacity(0.001))
     }
 }
