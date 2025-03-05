@@ -65,6 +65,6 @@ struct ConcertModel: Hashable {
     }
 }
 
-enum ConcertGenre {
-    case soul, hiphop, blues, rock
+enum ConcertGenre: String, CaseIterable, Hashable {
+    case soul, hiphop, blues, rock, jazz, country, pop, metal
 }
