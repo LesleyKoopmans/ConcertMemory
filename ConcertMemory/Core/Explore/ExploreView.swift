@@ -8,9 +8,17 @@
 import SwiftUI
 
 struct ExploreView: View {
+    
+    let concert = ConcertModel.mock
+    
     var body: some View {
         NavigationStack {
-            Text("Explore")
+            HeroCellView(
+                title: concert.artist,
+                subtitle: concert.subtitle,
+                imageName: concert.profileImageName
+            )
+            .frame(height: 200)
                 .navigationTitle("Explore")
 
         }
