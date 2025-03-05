@@ -12,17 +12,39 @@ struct OnboardingCompletedView: View {
     
     var body: some View {
         VStack {
-            Text("Onboarding Completed!")
-                .frame(maxHeight: .infinity)
+            introSection
             
-            Button {
-                onFinishButtonPressed()
-            } label: {
-                Text("Finish")
-                    .callToActionButton()
-            }
+            buttonSection
+            
         }
         .padding(16)
+    }
+    
+    private var introSection: some View {
+        VStack(spacing: 12) {
+            Group {
+                Text("Welcome to Concert Memory")
+                    .font(.largeTitle)
+                    .foregroundStyle(.accent)
+                    .padding(.bottom, 12)
+                
+                Text("With this app can keep a diary off all the concerts you went through. Keep memories about all the beatiful nights you had and remember the fun times!")
+                
+                Text("Please click Finish to get started with app. Upload your first memories and sign up to our service so you can share memories!")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private var buttonSection: some View {
+        Button {
+            onFinishButtonPressed()
+        } label: {
+            Text("Finish")
+                .callToActionButton()
+        }
     }
     
     func onFinishButtonPressed() {
