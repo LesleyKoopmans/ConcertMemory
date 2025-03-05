@@ -14,12 +14,12 @@ struct TabBarView: View {
                 .tabItem {
                     Label("Explore", systemImage: "music.note")
                 }
-            
+
             CreateConcertView()
                 .tabItem {
                     Label("New", systemImage: "plus.app.fill")
                 }
-            
+
             ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
