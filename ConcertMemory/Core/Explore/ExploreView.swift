@@ -12,6 +12,7 @@ struct ExploreView: View {
     let concert = ConcertModel.mock
     @State private var recentConcerts: [ConcertModel] = ConcertModel.mocks
     @State private var genres: [ConcertGenre] = ConcertGenre.allCases
+    @State private var popularConcerts: [ConcertModel] = ConcertModel.mocks
     
     var body: some View {
         NavigationStack {
@@ -19,6 +20,8 @@ struct ExploreView: View {
                 recentSection
                 
                 genreSection
+                
+                popularSection
             }
             .navigationTitle("Explore")
 
@@ -34,6 +37,9 @@ struct ExploreView: View {
                         subtitle: concert.subtitle,
                         imageName: concert.profileImageName
                     )
+                    .anyButton(.plain) {
+                        
+                    }
                 }
             }
             .removeListRowFormatting()
@@ -52,6 +58,9 @@ struct ExploreView: View {
                                 title: genre.rawValue.capitalized,
                                 imageName: Constants.randomImage
                             )
+                            .anyButton(.plain) {
+                                
+                            }
                         }
                     }
                 }
@@ -63,6 +72,24 @@ struct ExploreView: View {
             .removeListRowFormatting()
         } header: {
             Text("Genres")
+        }
+    }
+    
+    private var popularSection: some View {
+        Section {
+            ForEach(popularConcerts, id: \.self) { concert in
+                CustomListCellView(
+                    imageName: concert.profileImageName,
+                    title: concert.artist,
+                    subtitle: concert.subtitle
+                )
+                .anyButton(.highlight) {
+                    
+                }
+                .removeListRowFormatting()
+            }
+        } header: {
+            Text("Popular")
         }
     }
 }
