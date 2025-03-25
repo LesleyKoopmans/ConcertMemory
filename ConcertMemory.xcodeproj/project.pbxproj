@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EF14E0942D78A433008424D6 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = EF14E0932D78A433008424D6 /* SDWebImageSwiftUI */; };
+		EF765BD32D92ECFD002724BF /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = EF765BD22D92ECFD002724BF /* SwiftfulUtilities */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF14E0942D78A433008424D6 /* SDWebImageSwiftUI in Frameworks */,
+				EF765BD32D92ECFD002724BF /* SwiftfulUtilities in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +121,7 @@
 			name = ConcertMemory;
 			packageProductDependencies = (
 				EF14E0932D78A433008424D6 /* SDWebImageSwiftUI */,
+				EF765BD22D92ECFD002724BF /* SwiftfulUtilities */,
 			);
 			productName = ConcertMemory;
 			productReference = EF14E0372D787E8A008424D6 /* ConcertMemory.app */;
@@ -204,6 +207,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				EF14E0922D78A433008424D6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				EF765BD12D92ECFD002724BF /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EF14E0382D787E8A008424D6 /* Products */;
@@ -618,6 +622,14 @@
 				minimumVersion = 3.1.3;
 			};
 		};
+		EF765BD12D92ECFD002724BF /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftfulThinking/SwiftfulUtilities";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -625,6 +637,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EF14E0922D78A433008424D6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		EF765BD22D92ECFD002724BF /* SwiftfulUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF765BD12D92ECFD002724BF /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */;
+			productName = SwiftfulUtilities;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
