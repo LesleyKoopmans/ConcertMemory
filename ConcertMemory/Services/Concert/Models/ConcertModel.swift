@@ -6,8 +6,8 @@
 //
 import Foundation
 
-struct ConcertModel: Hashable {
-    let concertId: String
+struct ConcertModel: Identifiable, Hashable {
+    let id: String
     let artist: String?
     let subtitle: String?
     let description: String?
@@ -22,7 +22,7 @@ struct ConcertModel: Hashable {
     let dateCreated: Date?
     
     init(
-        concertId: String,
+        id: String,
         artist: String? = nil,
         subtitle: String? = nil,
         description: String? = nil,
@@ -36,7 +36,7 @@ struct ConcertModel: Hashable {
         concertDate: Date? = nil,
         dateCreated: Date? = nil
     ) {
-        self.concertId = concertId
+        self.id = id
         self.artist = artist
         self.subtitle = subtitle
         self.description = description
@@ -57,10 +57,10 @@ struct ConcertModel: Hashable {
     
     static var mocks: [ConcertModel] {
         [
-            ConcertModel(concertId: UUID().uuidString, artist: "Atmosphere", subtitle: "Undergroud hiphop in de Melkweg", description: "Na ze in totaal 6x te hebben gezien vallen ze nog steeds niet tegen. Elke keer weten ze weer te verassen met nieuwe versies van de bekende nummers. Alle oude klasiekers kwamen zoals gebruikelijk langs.", rating: 4, concertGenre: .hiphop, venue: "Melkweg", room: "Kleine zaal", profileImageName: Constants.randomImage, authorId: "user_1", withUid: nil, concertDate: .now, dateCreated: .now),
-            ConcertModel(concertId: UUID().uuidString, artist: "Robert Jon & The Wreck", subtitle: "Southern Rock op z'n best", rating: 4, concertGenre: .rock, venue: "Burgerweeshuis", profileImageName: Constants.randomImage, authorId: "user_1", withUid: ["user_1"], concertDate: .now, dateCreated: .now),
-            ConcertModel(concertId: UUID().uuidString, artist: "The Roots", subtitle: "Groot feest met een live band", description: "Een van de weinige acts die nog op de verlanglijst stond. Twee uur lang speelden ze aaneengesloten, ze hadden amper geduld om applaus te incaseren. De band bestond uit 7 leden waarbij iedereen aan goed tot z'n recht kwam.", rating: 4.5, concertGenre: .hiphop, venue: "Paradiso", room: "Grote zaal", profileImageName: Constants.randomImage, authorId: "user_1", withUid: ["user_2", "user_3", "user_4"], concertDate: .now, dateCreated: .now),
-            ConcertModel(concertId: UUID().uuidString, artist: "Dawn Brothers", subtitle: "Soul met een oldschool randje", concertGenre: .soul, venue: "Metropool", room: "Bud zaal", profileImageName: Constants.randomImage, authorId: "user_2", withUid: ["user_1"], concertDate: .now, dateCreated: .now)
+            ConcertModel(id: UUID().uuidString, artist: "Atmosphere", subtitle: "Undergroud hiphop in de Melkweg", description: "Na ze in totaal 6x te hebben gezien vallen ze nog steeds niet tegen. Elke keer weten ze weer te verassen met nieuwe versies van de bekende nummers. Alle oude klasiekers kwamen zoals gebruikelijk langs.", rating: 4, concertGenre: .hiphop, venue: "Melkweg", room: "Kleine zaal", profileImageName: Constants.randomImage, authorId: "user_1", withUid: nil, concertDate: .now, dateCreated: .now),
+            ConcertModel(id: UUID().uuidString, artist: "Robert Jon & The Wreck", subtitle: "Southern Rock op z'n best", rating: 4, concertGenre: .rock, venue: "Burgerweeshuis", profileImageName: Constants.randomImage, authorId: "user_1", withUid: ["user_1"], concertDate: .now, dateCreated: .now),
+            ConcertModel(id: UUID().uuidString, artist: "The Roots", subtitle: "Groot feest met een live band", description: "Een van de weinige acts die nog op de verlanglijst stond. Twee uur lang speelden ze aaneengesloten, ze hadden amper geduld om applaus te incaseren. De band bestond uit 7 leden waarbij iedereen aan goed tot z'n recht kwam.", rating: 4.5, concertGenre: .hiphop, venue: "Paradiso", room: "Grote zaal", profileImageName: Constants.randomImage, authorId: "user_1", withUid: ["user_2", "user_3", "user_4"], concertDate: .now, dateCreated: .now),
+            ConcertModel(id: UUID().uuidString, artist: "Dawn Brothers", subtitle: "Soul met een oldschool randje", concertGenre: .soul, venue: "Metropool", room: "Bud zaal", profileImageName: Constants.randomImage, authorId: "user_2", withUid: ["user_1"], concertDate: .now, dateCreated: .now)
         ]
     }
 }
