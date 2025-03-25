@@ -51,11 +51,11 @@ struct ConcertModel: Identifiable, Hashable {
         self.dateCreated = dateCreated
     }
     
-    static var mock: ConcertModel {
+    static var mock: Self {
         mocks[0]
     }
     
-    static var mocks: [ConcertModel] {
+    static var mocks: [Self] {
         [
             ConcertModel(id: UUID().uuidString, artist: "Atmosphere", subtitle: "Undergroud hiphop in de Melkweg", description: "Na ze in totaal 6x te hebben gezien vallen ze nog steeds niet tegen. Elke keer weten ze weer te verassen met nieuwe versies van de bekende nummers. Alle oude klasiekers kwamen zoals gebruikelijk langs.", rating: 4, concertGenre: .hiphop, venue: "Melkweg", room: "Kleine zaal", profileImageName: Constants.randomImage, authorId: "user_1", withUid: nil, concertDate: .now, dateCreated: .now),
             ConcertModel(id: UUID().uuidString, artist: "Robert Jon & The Wreck", subtitle: "Southern Rock op z'n best", rating: 4, concertGenre: .rock, venue: "Burgerweeshuis", profileImageName: Constants.randomImage, authorId: "user_1", withUid: ["user_1"], concertDate: .now, dateCreated: .now),

@@ -10,6 +10,7 @@ import PhotosUI
 
 struct CreateConcertView: View {
 
+    @Environment(\.dismiss) private var dismiss
     @State private var isUploadingPost: Bool = false
     @State private var artist: String = ""
     @State private var venue: String = ""
@@ -18,24 +19,42 @@ struct CreateConcertView: View {
     @StateObject var viewModel = CreateConcertViewModel()
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                imageSection
-                
-                inputSection
-                
-                Spacer()
-                
-                buttonSection
-                
-            }
-            .onAppear {
-                imagePickerPresented.toggle()
+        ZStack {
+            ScrollView(.vertical) {
+                LazyVStack(spacing: 12) {
+                    imageSection
+                    inputSection
+                }
             }
             
-            .photosPicker(isPresented: $imagePickerPresented, selection: $viewModel.selectedImage)
-
+            headerSection
+            buttonSection
+            
         }
+        .ignoresSafeArea()
+        .onAppear {
+            imagePickerPresented.toggle()
+        }
+        .toolbar(.hidden, for: .navigationBar)
+        .photosPicker(isPresented: $imagePickerPresented, selection: $viewModel.selectedImage)
+    }
+    
+    private var headerSection: some View {
+        ZStack {
+            Image(systemName: "xmark")
+                .foregroundStyle(.white)
+                .font(.title3)
+                .padding(10)
+                .background(.accent)
+                .clipShape(Circle())
+                .padding(.leading, 16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .anyButton {
+                    dismiss()
+                }
+        }
+        .frame(height: 150)
+        .frame(maxHeight: .infinity, alignment: .top)
     }
     
     private var imageSection: some View {
@@ -44,20 +63,11 @@ struct CreateConcertView: View {
                 loadedImage
                     .resizable()
                     .ignoresSafeArea()
-                    .frame(height: 300)
-            } else {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(.accent)
-                    Image(systemName: "plus")
-                        .font(.largeTitle)
-                        .foregroundStyle(.white)
-                }
-                .frame(width: 200, height: 200)
-                .anyButton(.press) {
-                    
-                }
             }
+        }
+        .frame(height: 300)
+        .anyButton {
+            imagePickerPresented = true
         }
     }
     
@@ -86,11 +96,13 @@ struct CreateConcertView: View {
                 Text("Finish")
             }
         }
-        .callToActionButton()
-        .anyButton(.press, action: {
+        .stickyBottomButton()
+        .anyButton {
             onUploadPostPressed()
-        })
+        }
         .disabled(isUploadingPost)
+        
+        .frame(maxHeight: .infinity, alignment: .bottom)
     }
     
     func onUploadPostPressed() {

@@ -17,6 +17,15 @@ extension View {
             .clipShape(RoundedRectangle(cornerRadius: 16))
     }
     
+    func stickyBottomButton() -> some View {
+        self
+            .font(.headline)
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: 70)
+            .background(.accent)
+    }
+    
     func tappableBackground() -> some View {
         self
             .background(Color.black.opacity(0.001))
