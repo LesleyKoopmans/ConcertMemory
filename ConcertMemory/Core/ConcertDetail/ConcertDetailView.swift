@@ -11,6 +11,7 @@ struct ConcertDetailView: View {
     
     @Environment(\.dismiss) var dismiss
     var concert: ConcertModel = ConcertModel.mock
+    var currentUser: UserModel = UserModel.mock
     
     var body: some View {
         ZStack {
@@ -32,17 +33,34 @@ struct ConcertDetailView: View {
     
     private var headerSection: some View {
         ZStack {
-            Image(systemName: "xmark")
-                .foregroundStyle(.white)
-                .font(.title3)
-                .padding(10)
-                .background(.accent)
-                .clipShape(Circle())
-                .padding(.leading, 16)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .anyButton {
-                    dismiss()
+            HStack {
+                Image(systemName: "xmark")
+                    .foregroundStyle(.white)
+                    .font(.title3)
+                    .padding(10)
+                    .background(.accent)
+                    .clipShape(Circle())
+                    .padding(.leading, 16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .anyButton {
+                        onDismissButtonPressed()
+                    }
+                Spacer()
+                
+                if concert.authorId == currentUser.id {
+                    Image(systemName: "pencil")
+                        .foregroundStyle(.white)
+                        .font(.title3)
+                        .padding(10)
+                        .background(.accent)
+                        .clipShape(Circle())
+                        .padding(.trailing, 16)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .anyButton {
+                            onEditButtonPressed()
+                        }
                 }
+            }
         }
         .frame(height: 150)
         .frame(maxHeight: .infinity, alignment: .top)
@@ -82,7 +100,6 @@ struct ConcertDetailView: View {
             .frame(height: 80, alignment: .bottom)
             .addingGradientBackgroundForText()
         }
-        
     }
     
     private var infoSection: some View {
@@ -127,6 +144,7 @@ struct ConcertDetailView: View {
         Section {
             if let description = concert.description {
                 Text(description)
+                    
             }
         } header: {
             Text("Description")
@@ -154,19 +172,46 @@ struct ConcertDetailView: View {
     private var additionalSection: some View {
         Section {
             VStack(alignment: .leading) {
-//                if let instruments = concert.instruments {
-//                    ForEach(instruments.keys, id: \.self) { key in
-//                        
-//                    }
-//                }
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "music.microphone")
+                            .frame(minWidth: 30, alignment: .leading)
+                            .foregroundStyle(.accent)
+                        Text("Microphone:")
+                            .frame(minWidth: 100, alignment: .leading)
+                        Text("Kees")
+                    }
+                    
+                    HStack {
+                        Image(systemName: "guitars")
+                            .frame(minWidth: 30, alignment: .leading)
+                            .foregroundStyle(.accent)
+                    Text("Guitars:")
+                        .frame(minWidth: 100, alignment: .leading)
+                    Text("Henk")
+                    }
+                    
+                    HStack {
+                        Image(systemName: "pianokeys")
+                            .frame(minWidth: 30, alignment: .leading)
+                            .foregroundStyle(.accent)
+                    Text("Keys:")
+                        .frame(minWidth: 100, alignment: .leading)
+                    Text("Sjaak")
+                    }
+                }
                 
                 if let withUid = concert.withUid {
                     ScrollView(.horizontal) {
                         HStack {
-                            ForEach(withUid, id: \.self) { profile in
-                                ImageLoaderView(urlString: profile)
+                            ForEach(withUid) { profile in
+                                
+                                ProfileImageView(imageName: profile.profileImageUrl ?? "")
                                     .clipShape(Circle())
                                     .frame(width: 60, height: 60)
+                                    .anyButton {
+                                        
+                                    }
                             }
                         }
                     }
@@ -174,12 +219,18 @@ struct ConcertDetailView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 8)
-            
-            
         } header: {
             Text("Addition Info")
                 .font(.callout)
         }
+    }
+    
+    private func onDismissButtonPressed() {
+        dismiss()
+    }
+    
+    private func onEditButtonPressed() {
+        
     }
 }
 

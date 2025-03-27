@@ -76,9 +76,9 @@ struct ProfileView: View {
             .anyButton {
                 onImagePickerButtonPressed()
             }
+            .clipShape(Circle())
             .frame(width: 150, height: 150)
             .frame(maxWidth: .infinity)
-            .clipShape(Circle())
             .removeListRowFormatting()
         }
     }

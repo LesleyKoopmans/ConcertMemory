@@ -7,20 +7,20 @@
 
 import Foundation
 
-struct UserModel {
+struct UserModel: Identifiable, Hashable {
     
-    let userId: String
+    let id: String
     let dateCreated: Date?
     let didCompleteOnboarding: Bool?
     let profileImageUrl: String?
     
     init(
-        userId: String,
+        id: String,
         dateCreated: Date? = nil,
         didCompleteOnboarding: Bool? = nil,
         profileImageUrl: String? = nil
     ) {
-        self.userId = userId
+        self.id = id
         self.dateCreated = dateCreated
         self.didCompleteOnboarding = didCompleteOnboarding
         self.profileImageUrl = profileImageUrl
@@ -32,10 +32,10 @@ struct UserModel {
     
     static var mocks: [Self] {
         return [
-            UserModel(userId: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: Constants.randomImage),
-            UserModel(userId: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: false, profileImageUrl: Constants.randomImage),
-            UserModel(userId: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: Constants.randomImage),
-            UserModel(userId: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: Constants.randomImage)
+            UserModel(id: "mock_user_1", dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: Constants.randomImage),
+            UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: false, profileImageUrl: "https://picsum.photos/600/500"),
+            UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: "https://picsum.photos/500/600"),
+            UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: "https://picsum.photos/500/500")
         ]
     }
 }

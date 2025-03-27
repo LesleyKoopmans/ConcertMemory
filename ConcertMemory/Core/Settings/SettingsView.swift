@@ -15,6 +15,7 @@ struct SettingsView: View {
     @State private var isPremium: Bool = false
     @State private var isAnonymousUser: Bool = true
     @State private var showCreateAccountView: Bool = false
+    @State private var showAlert: AnyAppAlert?
     
     var body: some View {
         NavigationStack {
@@ -28,6 +29,8 @@ struct SettingsView: View {
                 CreateAccountView()
                     .presentationDetents([.medium])
             }
+            .showCustomAlert(alert: $showAlert)
+
         }
     }
     
@@ -53,7 +56,7 @@ struct SettingsView: View {
                 .foregroundStyle(.red)
                 .rowFormatting()
                 .anyButton {
-                    
+                    onDeleteAccountPressed()
                 }
                 .removeListRowFormatting()
         } header: {
@@ -119,6 +122,20 @@ struct SettingsView: View {
     
     func onCreateAccountPressed() {
         showCreateAccountView = true
+    }
+    
+    func onDeleteAccountPressed() {
+        showAlert = AnyAppAlert(
+            title: "Delete Account",
+            subtitle: "Are you sure you want to delete your account?",
+            buttons: {
+                AnyView(
+                    Button("Delete", role: .destructive) {
+                        
+                    }
+                )
+            }
+        )
     }
 }
 

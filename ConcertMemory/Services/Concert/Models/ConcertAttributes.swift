@@ -10,10 +10,12 @@ enum ConcertGenre: String, CaseIterable, Hashable {
 }
 
 enum Instrument: String, CaseIterable, Hashable {
-    case guitar, drum, keys
+    case microphone, guitar, drum, keys
     
     var emoji: String {
         switch self {
+        case .microphone:
+            return "music.microphone"
         case .guitar:
             return "guitars"
         case .drum:

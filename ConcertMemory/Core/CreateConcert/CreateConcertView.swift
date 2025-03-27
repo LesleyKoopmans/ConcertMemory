@@ -18,7 +18,7 @@ struct CreateConcertView: View {
     @State private var description: String = ""
     @State private var concertDate: Date = .now
     @State private var selectedGenre: ConcertGenre = .blues
-    @State private var rating: Double = 3
+    @State private var rating: Double = 0
     @State private var imagePickerPresented = false
     @StateObject var viewModel = CreateConcertViewModel()
     
