@@ -34,7 +34,7 @@ struct UserModel: Identifiable, Hashable {
         return [
             UserModel(id: "mock_user_1", dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: Constants.randomImage),
             UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: false, profileImageUrl: "https://picsum.photos/600/500"),
-            UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: "https://picsum.photos/500/600"),
+            UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: nil),
             UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: "https://picsum.photos/500/500")
         ]
     }

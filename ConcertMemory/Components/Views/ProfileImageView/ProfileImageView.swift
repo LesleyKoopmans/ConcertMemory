@@ -9,10 +9,22 @@ import SwiftUI
 
 struct ProfileImageView: View {
     
-    var imageName: String = Constants.randomImage
+    var imageName: String?
+    var onProfileImagePressed: (() -> Void)?
     
     var body: some View {
-        ImageLoaderView(urlString: imageName)
+        if let imageName = imageName {
+            ImageLoaderView(urlString: imageName)
+        } else {
+            ZStack {
+                Circle()
+                    .fill(.accent.opacity(0.8))
+                Image(systemName: "person.fill")
+                    .foregroundStyle(.white)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+            }
+        }
     }
 }
 

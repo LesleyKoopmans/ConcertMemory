@@ -60,17 +60,10 @@ struct ProfileView: View {
                 if let loadedImage = viewModel.image {
                     loadedImage
                         .resizable()
-                } else if let imageUrl = currentUser?.profileImageUrl {
-                    ImageLoaderView(urlString: imageUrl)
-                } else {
-                    ZStack {
-                        Circle()
-                            .fill(.accent)
-                        Image(systemName: "plus")
-                            .foregroundStyle(.white)
-                            .font(.title)
-                            .fontWeight(.bold)
-                    }
+                }  else {
+                    ProfileImageView(onProfileImagePressed: {
+                        onImagePickerButtonPressed()
+                    })
                 }
             }
             .anyButton {

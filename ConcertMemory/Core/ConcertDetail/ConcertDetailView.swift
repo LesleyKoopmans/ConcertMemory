@@ -73,12 +73,12 @@ struct ConcertDetailView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 250)
+        .frame(height: 350)
         .overlay(alignment: .bottomLeading) {
             HStack {
                 if let artist = concert.artist {
                     Text(artist)
-                        .font(.title)
+                        .font(.largeTitle)
                         .foregroundStyle(.white)
                 }
                 
@@ -205,13 +205,11 @@ struct ConcertDetailView: View {
                     ScrollView(.horizontal) {
                         HStack {
                             ForEach(withUid) { profile in
-                                
-                                ProfileImageView(imageName: profile.profileImageUrl ?? "")
-                                    .clipShape(Circle())
-                                    .frame(width: 60, height: 60)
-                                    .anyButton {
-                                        
-                                    }
+                                ProfileImageView(imageName: profile.profileImageUrl, onProfileImagePressed: {
+                                    
+                                })
+                                .clipShape(Circle())
+                                .frame(width: 60, height: 60)
                             }
                         }
                     }
