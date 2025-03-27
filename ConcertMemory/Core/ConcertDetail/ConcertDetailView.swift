@@ -10,8 +10,8 @@ import SwiftUI
 struct ConcertDetailView: View {
     
     @Environment(\.dismiss) var dismiss
-    var concert: ConcertModel = ConcertModel.mock
-    var currentUser: UserModel = UserModel.mock
+    var concert: ConcertModel
+    @State private var currentUser: UserModel = UserModel.mock
     
     var concertId: String = ConcertModel.mock.id
     
@@ -219,6 +219,7 @@ struct ConcertDetailView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 8)
+            .padding(.bottom, 100)
         } header: {
             Text("Addition Info")
                 .font(.callout)
@@ -235,5 +236,5 @@ struct ConcertDetailView: View {
 }
 
 #Preview {
-    ConcertDetailView()
+    ConcertDetailView(concert: ConcertModel.mock)
 }

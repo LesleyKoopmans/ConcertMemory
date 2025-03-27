@@ -151,7 +151,7 @@ struct ProfileView: View {
     }
     
     private func onConcertPressed(concert: ConcertModel) {
-        path.append(.concert(concertId: concert.id))
+        path.append(.concert(concert: concert, concertId: concert.id))
     }
 }
 

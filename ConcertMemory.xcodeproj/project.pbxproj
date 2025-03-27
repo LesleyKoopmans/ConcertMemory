@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		EF14E0942D78A433008424D6 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = EF14E0932D78A433008424D6 /* SDWebImageSwiftUI */; };
 		EF765BD32D92ECFD002724BF /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = EF765BD22D92ECFD002724BF /* SwiftfulUtilities */; };
+		EF765CEB2D9584CA002724BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF765CEA2D9584CA002724BF /* GoogleService-Info.plist */; };
+		EF765CEE2D958541002724BF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = EF765CED2D958541002724BF /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +34,7 @@
 		EF14E0372D787E8A008424D6 /* ConcertMemory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConcertMemory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF14E0472D787E8B008424D6 /* ConcertMemoryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcertMemoryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF14E0512D787E8B008424D6 /* ConcertMemoryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcertMemoryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF765CEA2D9584CA002724BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -58,6 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF14E0942D78A433008424D6 /* SDWebImageSwiftUI in Frameworks */,
+				EF765CEE2D958541002724BF /* FirebaseAuth in Frameworks */,
 				EF765BD32D92ECFD002724BF /* SwiftfulUtilities in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +90,7 @@
 				EF14E04A2D787E8B008424D6 /* ConcertMemoryTests */,
 				EF14E0542D787E8B008424D6 /* ConcertMemoryUITests */,
 				EF14E0382D787E8A008424D6 /* Products */,
+				EF765CEA2D9584CA002724BF /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,6 +127,7 @@
 			packageProductDependencies = (
 				EF14E0932D78A433008424D6 /* SDWebImageSwiftUI */,
 				EF765BD22D92ECFD002724BF /* SwiftfulUtilities */,
+				EF765CED2D958541002724BF /* FirebaseAuth */,
 			);
 			productName = ConcertMemory;
 			productReference = EF14E0372D787E8A008424D6 /* ConcertMemory.app */;
@@ -208,6 +214,7 @@
 			packageReferences = (
 				EF14E0922D78A433008424D6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				EF765BD12D92ECFD002724BF /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */,
+				EF765CEC2D958541002724BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EF14E0382D787E8A008424D6 /* Products */;
@@ -226,6 +233,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF765CEB2D9584CA002724BF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,6 +638,14 @@
 				minimumVersion = 1.1.6;
 			};
 		};
+		EF765CEC2D958541002724BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.10.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -642,6 +658,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EF765BD12D92ECFD002724BF /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */;
 			productName = SwiftfulUtilities;
+		};
+		EF765CED2D958541002724BF /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF765CEC2D958541002724BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

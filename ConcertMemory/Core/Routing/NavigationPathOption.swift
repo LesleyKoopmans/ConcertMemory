@@ -8,7 +8,7 @@ import SwiftUI
 import Foundation
 
 enum NavigationPathOption: Hashable {
-    case concert(concertId: String)
+    case concert(concert: ConcertModel, concertId: String)
     case genre(genre: ConcertGenre, imageName: String)
 }
 
@@ -17,8 +17,8 @@ extension View {
         self
             .navigationDestination(for: NavigationPathOption.self) { newValue in
                 switch newValue {
-                case .concert(concertId: let concertId):
-                    ConcertDetailView(concertId: concertId)
+                case .concert(concert: let concert, concertId: let concertId):
+                    ConcertDetailView(concert: concert, concertId: concertId)
                 case .genre(genre: let genre, imageName: let imageName):
                     GenreListView(path: path, genre: genre, imageName: imageName)
                 }

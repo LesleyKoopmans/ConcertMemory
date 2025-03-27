@@ -59,13 +59,12 @@ struct ExploreView: View {
                             if let imageName = popularConcerts.first(where: { $0.concertGenre == genre })?.profileImageName {
                                 GenreCellView(
                                     title: genre.rawValue.capitalized,
-                                    imageName: Constants.randomImage
+                                    imageName: genre.headerImage
                                 )
                                 .anyButton(.plain) {
-                                    onGenrePressed(genre: genre, imageName: imageName)
+                                    onGenrePressed(genre: genre, imageName: genre.headerImage)
                                 }
                             }
-                            
                         }
                     }
                 }
@@ -99,7 +98,7 @@ struct ExploreView: View {
     }
     
     private func onConcertPressed(concert: ConcertModel) {
-        path.append(.concert(concertId: concert.id))
+        path.append(.concert(concert: concert, concertId: concert.id))
     }
     
     private func onGenrePressed(genre: ConcertGenre, imageName: String) {
