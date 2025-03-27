@@ -36,9 +36,54 @@ struct FirebaseAuthService {
             rawNonce: response.nonce
         )
         
+        if let user = Auth.auth().currentUser, user.isAnonymous {
+            do {
+                // Try to link to exisiting anonymous account
+                let result = try await user.link(with: credential)
+                return result.asAuthInfo
+            } catch let error as NSError {
+                let authError = AuthErrorCode(rawValue: error.code)
+                switch authError {
+                case .providerAlreadyLinked, .credentialAlreadyInUse:
+                    if let secondaryCredential = error.userInfo["FIRAuthErrorUserInfoUpdatedCredentialKey"] as? AuthCredential {
+                        let result = try await Auth.auth().signIn(with: secondaryCredential)
+                        return result.asAuthInfo
+                    }
+                    break
+                default:
+                    break
+                }
+            }
+        }
+        
+        
+        // Otherwise sign in with to new account
         let result = try await Auth.auth().signIn(with: credential)
         
         return result.asAuthInfo
+    }
+    
+    func signOut() throws {
+        try Auth.auth().signOut()
+    }
+    
+    func deleteAccount() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw AuthError.userNotFound
+        }
+        
+        try await user.delete()
+    }
+    
+    enum AuthError: LocalizedError {
+        case userNotFound
+        
+        var errorDescription: String? {
+            switch self {
+            case .userNotFound:
+                return "Current authenticated user not found."
+            }
+        }
     }
 }
 

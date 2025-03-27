@@ -26,10 +26,12 @@ struct SettingsView: View {
                 applicationSection
             }
             .navigationTitle("Settings")
-            .sheet(isPresented: $showCreateAccountView) {
+            .sheet(isPresented: $showCreateAccountView, onDismiss: {
+                setAnonymousAccountStatus()
+            }, content: {
                 CreateAccountView()
                     .presentationDetents([.medium])
-            }
+            })
             .onAppear {
                 setAnonymousAccountStatus()
             }
@@ -116,10 +118,14 @@ struct SettingsView: View {
     }
     
     func onSignOutPressed() {
-        dismiss()
         Task {
-            try? await Task.sleep(for: .seconds(1))
-            appState.updateViewState(showTabBarView: false)
+            do {
+                try authService.signOut()
+                await dismissScreen()
+            } catch {
+                showAlert = AnyAppAlert(title: error.localizedDescription)
+            }
+            
         }
     }
     
@@ -134,15 +140,32 @@ struct SettingsView: View {
             buttons: {
                 AnyView(
                     Button("Delete", role: .destructive) {
-                        
+                        onDeleteAccountConfirmed()
                     }
                 )
             }
         )
     }
     
+    private func onDeleteAccountConfirmed() {
+        Task {
+            do {
+                try await authService.deleteAccount()
+                await dismissScreen()
+            } catch {
+                showAlert = AnyAppAlert(title: error.localizedDescription)
+            }
+        }
+    }
+    
     func setAnonymousAccountStatus() {
         isAnonymousUser = authService.getAuthenticatedUser()?.isAnonymous == true
+    }
+    
+    private func dismissScreen() async {
+        dismiss()
+        try? await Task.sleep(for: .seconds(1))
+        appState.updateViewState(showTabBarView: false)
     }
 }
 
