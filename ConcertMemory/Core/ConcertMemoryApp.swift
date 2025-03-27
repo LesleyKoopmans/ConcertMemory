@@ -11,7 +11,7 @@ import Firebase
 @main
 struct ConcertMemoryApp: App {
     
-    @UIApplicationDelegateAdaptor(AppDelegate.self)
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
