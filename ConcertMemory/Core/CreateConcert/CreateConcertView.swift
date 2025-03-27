@@ -14,7 +14,11 @@ struct CreateConcertView: View {
     @State private var isUploadingPost: Bool = false
     @State private var artist: String = ""
     @State private var venue: String = ""
+    @State private var room: String = ""
     @State private var description: String = ""
+    @State private var concertDate: Date = .now
+    @State private var selectedGenre: ConcertGenre = .blues
+    @State private var rating: Double = 3
     @State private var imagePickerPresented = false
     @StateObject var viewModel = CreateConcertViewModel()
     
@@ -26,7 +30,6 @@ struct CreateConcertView: View {
                     inputSection
                 }
             }
-            
             headerSection
             buttonSection
             
@@ -50,7 +53,7 @@ struct CreateConcertView: View {
                 .padding(.leading, 16)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .anyButton {
-                    dismiss()
+                    onCancelButtonPressed()
                 }
         }
         .frame(height: 150)
@@ -63,9 +66,14 @@ struct CreateConcertView: View {
                 loadedImage
                     .resizable()
                     .ignoresSafeArea()
+            } else {
+                ProgressView()
+                    .tint(.accent)
             }
         }
         .frame(height: 300)
+        .frame(maxWidth: .infinity)
+        .background(.accent.opacity(0.2))
         .anyButton {
             imagePickerPresented = true
         }
@@ -73,43 +81,77 @@ struct CreateConcertView: View {
     
     private var inputSection: some View {
         VStack(spacing: 8) {
-            TextField("Artist", text: $artist)
+            TextField("Artist*", text: $artist)
                 .textFieldStyle(.roundedBorder)
-                .padding(.horizontal)
             
-            TextField("Venue", text: $venue)
-                .textFieldStyle(.roundedBorder)
-                .padding(.horizontal)
+            HStack {
+                TextField("Venue*", text: $venue)
+                    .textFieldStyle(.roundedBorder)
+                
+                TextField("Room", text: $room)
+                    .textFieldStyle(.roundedBorder)
+            }
             
-            TextField("Description", text: $description, axis: .vertical)
+            TextField("Description*", text: $description, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
-                .padding(.horizontal)
+            
+            HStack {
+                Text("Date")
+                    .foregroundStyle(.accent)
+                DatePicker("", selection: $concertDate, displayedComponents: .date)
+            }
+        
+            HStack {
+                Text("Genre")
+                    .foregroundStyle(.accent)
+                Spacer()
+                Picker("Genre", selection: $selectedGenre) {
+                    ForEach(ConcertGenre.allCases, id: \.self) { genre in
+                        Text(genre.rawValue.capitalized)
+                            .tag(genre)
+                    }
+                }
+            }
+            
+            HStack {
+                Text("Rating")
+                    .foregroundStyle(.accent)
+                Slider(value: $rating, in: 0...5, step: 0.5)
+                
+                HStack(spacing: 0) {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                    Text("\(rating, specifier: "%.1f")")
+                        .frame(width: 30)
+                }
+            }
         }
+        .padding(.horizontal)
     }
     
     private var buttonSection: some View {
-        ZStack {
-            if isUploadingPost {
-                ProgressView()
-                    .tint(.white)
-            } else {
-                Text("Finish")
+        AsyncCallToActionButton(
+            isLoading: isUploadingPost,
+            title: "Upload",
+            action: {
+                onUploadPostPressed()
             }
-        }
+        )
         .stickyBottomButton()
-        .anyButton {
-            onUploadPostPressed()
-        }
-        .disabled(isUploadingPost)
-        
         .frame(maxHeight: .infinity, alignment: .bottom)
+        .disabled(viewModel.image == nil || artist.isEmpty || venue.isEmpty || description.isEmpty)
     }
     
-    func onUploadPostPressed() {
+    private func onCancelButtonPressed() {
+        dismiss()
+    }
+    
+    private func onUploadPostPressed() {
         isUploadingPost = true
         
         Task {
             try await Task.sleep(for: .seconds(3))
+            dismiss()
             isUploadingPost = false
         }
     }
