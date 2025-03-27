@@ -16,17 +16,19 @@ struct ProfileView: View {
     @State private var createConcertPresented = false
     @State private var myConcerts: [ConcertModel] = []
     @State private var isLoading: Bool = true
+    @State private var path: [NavigationPathOption] = []
     
     @StateObject var viewModel = ProfileViewModel()
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             
             List {
                 profileImageSection
                 myConcertsSection
             }
                 .navigationTitle("Profile")
+                .navigationDestinationForCoreModule(path: $path)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         settingsButton
@@ -101,7 +103,7 @@ struct ProfileView: View {
                         subtitle: concert.subtitle
                     )
                     .anyButton {
-                        
+                        onConcertPressed(concert: concert)
                     }
                     .removeListRowFormatting()
                 }
@@ -146,6 +148,10 @@ struct ProfileView: View {
         try? await Task.sleep(for: .seconds(5))
         isLoading = false
         myConcerts = ConcertModel.mocks
+    }
+    
+    private func onConcertPressed(concert: ConcertModel) {
+        path.append(.concert(concertId: concert.id))
     }
 }
 

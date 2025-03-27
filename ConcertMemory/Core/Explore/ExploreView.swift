@@ -14,8 +14,10 @@ struct ExploreView: View {
     @State private var genres: [ConcertGenre] = ConcertGenre.allCases
     @State private var popularConcerts: [ConcertModel] = ConcertModel.mocks
     
+    @State private var path: [NavigationPathOption] = []
+    
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             List {
                 recentSection
                 
@@ -24,7 +26,7 @@ struct ExploreView: View {
                 popularSection
             }
             .navigationTitle("Explore")
-
+            .navigationDestinationForCoreModule(path: $path)
         }
     }
     
@@ -38,7 +40,7 @@ struct ExploreView: View {
                         imageName: concert.profileImageName
                     )
                     .anyButton(.plain) {
-                        
+                        onConcertPressed(concert: concert)
                     }
                 }
             }
@@ -54,13 +56,16 @@ struct ExploreView: View {
                 ScrollView(.horizontal) {
                     HStack(spacing: 12) {
                         ForEach(genres, id: \.self) { genre in
-                            GenreCellView(
-                                title: genre.rawValue.capitalized,
-                                imageName: Constants.randomImage
-                            )
-                            .anyButton(.plain) {
-                                
+                            if let imageName = popularConcerts.first(where: { $0.concertGenre == genre })?.profileImageName {
+                                GenreCellView(
+                                    title: genre.rawValue.capitalized,
+                                    imageName: Constants.randomImage
+                                )
+                                .anyButton(.plain) {
+                                    onGenrePressed(genre: genre, imageName: imageName)
+                                }
                             }
+                            
                         }
                     }
                 }
@@ -84,13 +89,21 @@ struct ExploreView: View {
                     subtitle: concert.subtitle
                 )
                 .anyButton(.highlight) {
-                    
+                    onConcertPressed(concert: concert)
                 }
                 .removeListRowFormatting()
             }
         } header: {
             Text("Popular")
         }
+    }
+    
+    private func onConcertPressed(concert: ConcertModel) {
+        path.append(.concert(concertId: concert.id))
+    }
+    
+    private func onGenrePressed(genre: ConcertGenre, imageName: String) {
+        path.append(.genre(genre: genre, imageName: imageName))
     }
 }
 

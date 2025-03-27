@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GenreListView: View {
     
+    @Binding var path: [NavigationPathOption]
     var genre: ConcertGenre = .blues
     var imageName: String = Constants.randomImage
     
@@ -21,14 +22,21 @@ struct GenreListView: View {
             
             ForEach(concerts) { concert in
                 CustomListCellView(imageName: concert.profileImageName, title: concert.artist, subtitle: concert.venue)
+                    .anyButton {
+                        onConcertPressed(concert: concert)
+                    }
             }
             .removeListRowFormatting()
         }
         .ignoresSafeArea()
         .listStyle(PlainListStyle())
     }
+    
+    private func onConcertPressed(concert: ConcertModel) {
+        path.append(.concert(concertId: concert.id))
+    }
 }
 
 #Preview {
-    GenreListView()
+    GenreListView(path: .constant([]))
 }

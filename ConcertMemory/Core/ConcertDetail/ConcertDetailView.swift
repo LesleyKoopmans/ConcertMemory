@@ -13,6 +13,8 @@ struct ConcertDetailView: View {
     var concert: ConcertModel = ConcertModel.mock
     var currentUser: UserModel = UserModel.mock
     
+    var concertId: String = ConcertModel.mock.id
+    
     var body: some View {
         ZStack {
             ScrollView(.vertical) {
