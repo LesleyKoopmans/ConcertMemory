@@ -7,23 +7,57 @@
 
 import Foundation
 
-struct UserModel: Identifiable, Hashable {
+struct UserModel: Codable, Identifiable, Hashable {
     
     let id: String
-    let dateCreated: Date?
+    let email: String?
+    let isAnonymous: Bool?
+    let creationDate: Date?
+    let creationVersion: String?
+    let lastSignInDate: Date?
     let didCompleteOnboarding: Bool?
     let profileImageUrl: String?
     
     init(
         id: String,
-        dateCreated: Date? = nil,
+        email: String? = nil,
+        isAnonymous: Bool? = nil,
+        creationDate: Date? = nil,
+        creationVersion: String? = nil,
+        lastSignInDate: Date? = nil,
         didCompleteOnboarding: Bool? = nil,
         profileImageUrl: String? = nil
     ) {
         self.id = id
-        self.dateCreated = dateCreated
+        self.email = email
+        self.isAnonymous = isAnonymous
+        self.creationDate = creationDate
+        self.creationVersion = creationVersion
+        self.lastSignInDate = lastSignInDate
         self.didCompleteOnboarding = didCompleteOnboarding
         self.profileImageUrl = profileImageUrl
+    }
+    
+    init(auth: UserAuthInfo, creationVersion: String?) {
+        self.init(
+            id: auth.uid,
+            email: auth.email,
+            isAnonymous: auth.isAnonymous,
+            creationDate: auth.creationDate,
+            creationVersion: creationVersion,
+            lastSignInDate: auth.lastSignInDate
+        )
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case email
+        case isAnonymous = "is_anonymous"
+        case creationDate = "creation_date"
+        case creationVersion = "creation_version"
+        case lastSignInDate = "last_sign_in_date"
+        case didCompleteOnboarding = "did_complete_onboarding"
+        case profileImageUrl = "profile_image_url"
     }
     
     static var mock: Self {
@@ -32,10 +66,10 @@ struct UserModel: Identifiable, Hashable {
     
     static var mocks: [Self] {
         return [
-            UserModel(id: "mock_user_1", dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: Constants.randomImage),
-            UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: false, profileImageUrl: "https://picsum.photos/600/500"),
-            UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: nil),
-            UserModel(id: UUID().uuidString, dateCreated: .now, didCompleteOnboarding: true, profileImageUrl: "https://picsum.photos/500/500")
+            UserModel(id: "mock_user_1", creationDate: .now, didCompleteOnboarding: true, profileImageUrl: Constants.randomImage),
+            UserModel(id: UUID().uuidString, creationDate: .now, didCompleteOnboarding: false, profileImageUrl: "https://picsum.photos/600/500"),
+            UserModel(id: UUID().uuidString, creationDate: .now, didCompleteOnboarding: true, profileImageUrl: nil),
+            UserModel(id: UUID().uuidString, creationDate: .now, didCompleteOnboarding: true, profileImageUrl: "https://picsum.photos/500/500")
         ]
     }
 }
