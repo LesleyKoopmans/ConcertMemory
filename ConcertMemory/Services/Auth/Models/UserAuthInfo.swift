@@ -27,4 +27,13 @@ struct UserAuthInfo: Sendable {
         self.lastSignInDate = lastSignInDate
     }
     
+    static func mock(isAnonymous: Bool = false) -> Self {
+        UserAuthInfo(
+            uid: "mock_user_123",
+            email: "hello@swiftful-thinking.com",
+            isAnonymous: isAnonymous,
+            creationDate: .now,
+            lastSignInDate: .now
+        )
+    }
 }
