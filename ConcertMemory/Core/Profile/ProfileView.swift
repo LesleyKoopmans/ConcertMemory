@@ -9,7 +9,9 @@ import SwiftUI
 import PhotosUI
 
 struct ProfileView: View {
-
+    
+    @Environment(UserManager.self) private var userManager
+    
     @State private var showSettingsView: Bool = false
     @State private var currentUser: UserModel?
     @State private var imagePickerPresented = false
@@ -145,6 +147,7 @@ struct ProfileView: View {
     }
     
     private func loadData() async {
+        self.currentUser = userManager.currentUser
         try? await Task.sleep(for: .seconds(5))
         isLoading = false
         myConcerts = ConcertModel.mocks
@@ -158,4 +161,5 @@ struct ProfileView: View {
 #Preview {
     ProfileView()
         .environment(AppState())
+        .environment(UserManager(service: MockUserService(user: .mock)))
 }

@@ -10,6 +10,7 @@ struct OnboardingCompletedView: View {
     
     @State private var isCompletingProfileSetup: Bool = false
     @Environment(AppState.self) private var root
+    @Environment(UserManager.self) private var userManager
     
     var body: some View {
         VStack {
@@ -52,10 +53,11 @@ struct OnboardingCompletedView: View {
     }
     
     func onFinishButtonPressed() {
-        // save user profile
         isCompletingProfileSetup = true
+        
         Task {
-            try await Task.sleep(for: .seconds(3))
+            try await userManager.markOnboardingCompleteForCurrentUser()
+            // dismiss screen
             isCompletingProfileSetup = false
             root.updateViewState(showTabBarView: true)
             
@@ -67,4 +69,5 @@ struct OnboardingCompletedView: View {
 #Preview {
     OnboardingCompletedView()
         .environment(AppState())
+        .environment(UserManager(service: MockUserService()))
 }
