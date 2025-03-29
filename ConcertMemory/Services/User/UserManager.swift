@@ -6,90 +6,25 @@
 //
 import SwiftUI
 
-protocol UserService: Sendable {
-    func saveUser(user: UserModel) async throws
-    func streamUser(userId: String) -> AsyncThrowingStream<UserModel, Error>
-    func deleteUser(userId: String) async throws
-    func markOnboardingCompleted(userId: String) async throws
-}
-
-struct MockUserService: UserService {
-    
-    let currentUser: UserModel?
-    
-    init(user: UserModel? = nil) {
-        self.currentUser = user
-    }
-    
-    func saveUser(user: UserModel) async throws {
-        
-    }
-    
-    func streamUser(userId: String) -> AsyncThrowingStream<UserModel, any Error> {
-        AsyncThrowingStream { continuation in
-            if let currentUser {
-                continuation.yield(currentUser)
-            }
-        }
-    }
-    
-    func deleteUser(userId: String) async throws {
-        
-    }
-    
-    func markOnboardingCompleted(userId: String) async throws {
-        
-    }
-    
-    
-}
-
-import FirebaseFirestore
-import SwiftfulFirestore
-
-struct FirebaseUserService: UserService {
-    
-    var collection: CollectionReference {
-        Firestore.firestore().collection("users")
-    }
-    
-    func saveUser(user: UserModel) async throws {
-        try collection.document(user.id).setData(from: user, merge: true)
-    }
-    
-    func markOnboardingCompleted(userId: String) async throws {
-        try await collection.document(userId).updateData([
-            UserModel.CodingKeys.didCompleteOnboarding.rawValue: true
-        ])
-    }
-    
-    func streamUser(userId: String) -> AsyncThrowingStream<UserModel, Error> {
-        collection.streamDocument(id: userId)
-    }
-    
-    func deleteUser(userId: String) async throws {
-        try await collection.document(userId).delete()
-    }
-    
-}
-
 @MainActor
 @Observable
 class UserManager {
     
-    private let service: UserService
+    private let remote: RemoteUserService
+    private let local: LocalUserPersistence
     private(set) var currentUser: UserModel?
     
-    init(service: UserService) {
-        self.service = service
-        self.currentUser = nil
+    init(services: UserServices) {
+        self.remote = services.remote
+        self.local = services.local
+        self.currentUser = local.getCurrentUser()
     }
     
     func logIn(auth: UserAuthInfo, isNewUser: Bool) async throws {
         let creationVersion = isNewUser ? Utilities.appVersion : nil
         let user = UserModel(auth: auth, creationVersion: creationVersion)
         
-        try await service.saveUser(user: user)
+        try await remote.saveUser(user: user)
         
         addCurrentUserListener(userId: auth.uid)
     }
@@ -97,8 +32,9 @@ class UserManager {
     private func addCurrentUserListener(userId: String) {
         Task {
             do {
-                for try await value in service.streamUser(userId: userId) {
+                for try await value in remote.streamUser(userId: userId) {
                     self.currentUser = value
+                    self.saveCurrentUserLocally()
                     print("Successfully listened to user: \(value.id)")
                 }
             } catch {
@@ -107,9 +43,20 @@ class UserManager {
         }
     }
     
+    private func saveCurrentUserLocally() {
+        Task {
+            do {
+                try local.saveCurrentUser(user: currentUser)
+                print("Success saved current user locally")
+            } catch {
+                print("Error saving current user locally: \(error)")
+            }
+        }
+    }
+    
     func markOnboardingCompleteForCurrentUser() async throws {
         let uid = try currentUserId()
-        try await service.markOnboardingCompleted(userId: uid)
+        try await remote.markOnboardingCompleted(userId: uid)
     }
     
     func signOut() {
@@ -118,7 +65,7 @@ class UserManager {
     
     func deleteCurrentUser() async throws {
         let uid = try currentUserId()
-        try await service.deleteUser(userId: uid)
+        try await remote.deleteUser(userId: uid)
         signOut()
     }
     
