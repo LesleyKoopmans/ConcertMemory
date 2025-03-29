@@ -100,9 +100,8 @@ struct ProfileView: View {
             } else {
                 ForEach(myConcerts, id: \.self) { concert in
                     CustomListCellView(
-                        imageName: concert.profileImageName,
-                        title: concert.artist,
-                        subtitle: concert.subtitle
+                        imageName: concert.concertHeaderImageUrl,
+                        title: concert.artist
                     )
                     .anyButton {
                         onConcertPressed(concert: concert)

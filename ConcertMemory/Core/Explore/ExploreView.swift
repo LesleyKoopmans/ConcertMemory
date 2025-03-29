@@ -36,8 +36,7 @@ struct ExploreView: View {
                 CarouselView(items: recentConcerts) { concert in
                     HeroCellView(
                         title: concert.artist,
-                        subtitle: concert.subtitle,
-                        imageName: concert.profileImageName
+                        imageUrl: concert.concertHeaderImageUrl
                     )
                     .anyButton(.plain) {
                         onConcertPressed(concert: concert)
@@ -56,7 +55,7 @@ struct ExploreView: View {
                 ScrollView(.horizontal) {
                     HStack(spacing: 12) {
                         ForEach(genres, id: \.self) { genre in
-                            if let imageName = popularConcerts.first(where: { $0.concertGenre == genre })?.profileImageName {
+                            if let imageName = popularConcerts.first(where: { $0.concertGenre == genre })?.concertHeaderImageUrl {
                                 GenreCellView(
                                     title: genre.rawValue.capitalized,
                                     imageName: genre.headerImage
@@ -83,9 +82,8 @@ struct ExploreView: View {
         Section {
             ForEach(popularConcerts, id: \.self) { concert in
                 CustomListCellView(
-                    imageName: concert.profileImageName,
-                    title: concert.artist,
-                    subtitle: concert.subtitle
+                    imageName: concert.concertHeaderImageUrl,
+                    title: concert.artist
                 )
                 .anyButton(.highlight) {
                     onConcertPressed(concert: concert)

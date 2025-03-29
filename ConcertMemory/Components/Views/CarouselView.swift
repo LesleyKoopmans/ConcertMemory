@@ -62,8 +62,7 @@ struct CarouselView<Content: View, T: Hashable>: View {
     CarouselView(items: ConcertModel.mocks) { item in
         HeroCellView(
             title: item.artist,
-            subtitle: item.subtitle,
-            imageName: item.profileImageName
+            imageUrl: item.concertHeaderImageUrl
         )
     }
     .padding()

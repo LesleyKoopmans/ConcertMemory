@@ -11,6 +11,9 @@ import PhotosUI
 struct CreateConcertView: View {
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(AuthManager.self) private var authManager
+    @Environment(ConcertManager.self) private var concertManager
+    
     @State private var isUploadingPost: Bool = false
     @State private var artist: String = ""
     @State private var venue: String = ""
@@ -20,6 +23,8 @@ struct CreateConcertView: View {
     @State private var selectedGenre: ConcertGenre = .blues
     @State private var rating: Double = 0
     @State private var imagePickerPresented = false
+    @State private var showAlert: AnyAppAlert?
+    
     @StateObject var viewModel = CreateConcertViewModel()
     
     var body: some View {
@@ -39,6 +44,7 @@ struct CreateConcertView: View {
             imagePickerPresented.toggle()
         }
         .toolbar(.hidden, for: .navigationBar)
+        .showCustomAlert(alert: $showAlert)
         .photosPicker(isPresented: $imagePickerPresented, selection: $viewModel.selectedImage)
     }
     
@@ -147,16 +153,46 @@ struct CreateConcertView: View {
     }
     
     private func onUploadPostPressed() {
-        isUploadingPost = true
+        guard let headerImage = viewModel.uiImage else { return }
         
+        isUploadingPost = true
         Task {
-            try await Task.sleep(for: .seconds(3))
-            dismiss()
+            do {
+                let uid = try authManager.getAuthId()
+                
+                let concert = ConcertModel(
+                    id: UUID().uuidString,
+                    artist: artist,
+                    description: description,
+                    instruments: nil,
+                    rating: rating,
+                    concertGenre: selectedGenre,
+                    venue: venue,
+                    room: room,
+                    concertHeaderImageUrl: nil,
+                    concertMedia: nil,
+                    authorId: uid,
+                    withUid: nil,
+                    concertDate: concertDate,
+                    dateCreated: .now
+                )
+                
+                // UPLOAD!
+                try await concertManager.createConcert(concert: concert, image: headerImage)
+                
+                // Dismiss screen
+                dismiss()
+            } catch {
+                showAlert = AnyAppAlert(title: error.localizedDescription)
+            }
             isUploadingPost = false
         }
+        
     }
 }
 
 #Preview {
     CreateConcertView()
+        .environment(AuthManager(service: MockAuthService(user: .mock())))
+        .environment(ConcertManager(service: MockConcertService()))
 }

@@ -17,6 +17,7 @@ class CreateConcertViewModel: ObservableObject {
     }
     
     @Published var image: Image?
+    @Published var uiImage: UIImage?
     
     func loadImage(fromItem item: PhotosPickerItem?) async {
         guard let item = item else { return }
@@ -24,6 +25,7 @@ class CreateConcertViewModel: ObservableObject {
         guard let data = try? await item.loadTransferable(type: Data.self) else { return }
         
         guard let uiImage = UIImage(data: data) else { return }
+        self.uiImage = uiImage
         
         self.image = Image(uiImage: uiImage)
     }

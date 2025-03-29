@@ -70,7 +70,7 @@ struct ConcertDetailView: View {
     
     private var imageSection: some View {
         ZStack {
-            if let imageUrl = concert.profileImageName {
+            if let imageUrl = concert.concertHeaderImageUrl {
                 ImageLoaderView(urlString: imageUrl)
             }
         }
@@ -160,7 +160,7 @@ struct ConcertDetailView: View {
             ZStack {
                 if let mediaItems = concert.concertMedia {
                     CarouselView(items: mediaItems) { media in
-                        HeroCellView(title: "", subtitle: "", imageName: media)
+                        HeroCellView(title: "", subtitle: "", imageUrl: media)
                     }
                 }
             }

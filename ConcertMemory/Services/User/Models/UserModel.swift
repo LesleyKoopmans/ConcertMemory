@@ -16,7 +16,7 @@ struct UserModel: Codable, Identifiable, Hashable {
     let creationVersion: String?
     let lastSignInDate: Date?
     let didCompleteOnboarding: Bool?
-    let profileImageUrl: String?
+    private(set) var profileImageUrl: String?
     
     init(
         id: String,
@@ -58,6 +58,10 @@ struct UserModel: Codable, Identifiable, Hashable {
         case lastSignInDate = "last_sign_in_date"
         case didCompleteOnboarding = "did_complete_onboarding"
         case profileImageUrl = "profile_image_url"
+    }
+    
+    mutating func updateProfileImageUrl(imageUrl: String) {
+        profileImageUrl = imageUrl
     }
     
     static var mock: Self {

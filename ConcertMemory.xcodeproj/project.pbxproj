@@ -10,6 +10,7 @@
 		EF14E0942D78A433008424D6 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = EF14E0932D78A433008424D6 /* SDWebImageSwiftUI */; };
 		EF64C5FD2D970D510079CDB8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EF64C5FC2D970D510079CDB8 /* FirebaseFirestore */; };
 		EF64C7DC2D97FC370079CDB8 /* SwiftfulFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EF64C7DB2D97FC370079CDB8 /* SwiftfulFirestore */; };
+		EF64C8E92D9846E70079CDB8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = EF64C8E82D9846E70079CDB8 /* FirebaseStorage */; };
 		EF765BD32D92ECFD002724BF /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = EF765BD22D92ECFD002724BF /* SwiftfulUtilities */; };
 		EF765CEB2D9584CA002724BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF765CEA2D9584CA002724BF /* GoogleService-Info.plist */; };
 		EF765CEE2D958541002724BF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = EF765CED2D958541002724BF /* FirebaseAuth */; };
@@ -40,9 +41,22 @@
 		EF765CEA2D9584CA002724BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EF64C8EB2D9854E60079CDB8 /* Exceptions for "ConcertMemory" folder in "ConcertMemory" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = EF14E0362D787E8A008424D6 /* ConcertMemory */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EF14E0392D787E8A008424D6 /* ConcertMemory */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EF64C8EB2D9854E60079CDB8 /* Exceptions for "ConcertMemory" folder in "ConcertMemory" target */,
+			);
 			path = ConcertMemory;
 			sourceTree = "<group>";
 		};
@@ -67,6 +81,7 @@
 				EF14E0942D78A433008424D6 /* SDWebImageSwiftUI in Frameworks */,
 				EF64C7DC2D97FC370079CDB8 /* SwiftfulFirestore in Frameworks */,
 				EF765CEE2D958541002724BF /* FirebaseAuth in Frameworks */,
+				EF64C8E92D9846E70079CDB8 /* FirebaseStorage in Frameworks */,
 				EF64C5FD2D970D510079CDB8 /* FirebaseFirestore in Frameworks */,
 				EF765BD32D92ECFD002724BF /* SwiftfulUtilities in Frameworks */,
 			);
@@ -145,6 +160,7 @@
 				EF765CFA2D958C98002724BF /* SignInAppleAsync */,
 				EF64C5FC2D970D510079CDB8 /* FirebaseFirestore */,
 				EF64C7DB2D97FC370079CDB8 /* SwiftfulFirestore */,
+				EF64C8E82D9846E70079CDB8 /* FirebaseStorage */,
 			);
 			productName = ConcertMemory;
 			productReference = EF14E0372D787E8A008424D6 /* ConcertMemory.app */;
@@ -464,6 +480,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ConcertMemory/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Concert Memory";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -502,6 +519,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ConcertMemory/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Concert Memory";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -698,6 +716,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EF64C7DA2D97FC370079CDB8 /* XCRemoteSwiftPackageReference "SwiftfulFirestore" */;
 			productName = SwiftfulFirestore;
+		};
+		EF64C8E82D9846E70079CDB8 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF765CEC2D958541002724BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		EF765BD22D92ECFD002724BF /* SwiftfulUtilities */ = {
 			isa = XCSwiftPackageProductDependency;

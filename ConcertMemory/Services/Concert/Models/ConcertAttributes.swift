@@ -5,7 +5,7 @@
 //  Created by Lesley Koopmans on 27/03/2025.
 //
 
-enum ConcertGenre: String, CaseIterable, Hashable {
+enum ConcertGenre: String, CaseIterable, Hashable, Codable {
     case soul, hiphop, blues, rock, jazz, country, pop, metal
     
     var headerImage: String {
@@ -30,7 +30,7 @@ enum ConcertGenre: String, CaseIterable, Hashable {
     }
 }
 
-enum Instrument: String, CaseIterable, Hashable {
+enum Instrument: String, CaseIterable, Hashable, Codable {
     case microphone, guitar, drum, keys
     
     var emoji: String {

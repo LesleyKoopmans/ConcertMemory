@@ -11,12 +11,12 @@ struct HeroCellView: View {
     
     var title: String? = "This is some title"
     var subtitle: String? = "This is some subtitle that will go here."
-    var imageName: String? = Constants.randomImage
+    var imageUrl: String? = Constants.randomImage
     
     var body: some View {
         ZStack {
-            if let imageName {
-                ImageLoaderView(urlString: imageName)
+            if let imageUrl {
+                ImageLoaderView(urlString: imageUrl)
             } else {
                 Rectangle()
                     .fill(.accent)
@@ -50,7 +50,7 @@ struct HeroCellView: View {
             HeroCellView()
                 .frame(width: 300, height: 200)
             
-            HeroCellView(imageName: nil)
+            HeroCellView(imageUrl: nil)
                 .frame(width: 300, height: 200)
             
             HeroCellView()

@@ -21,7 +21,7 @@ struct GenreListView: View {
                 .removeListRowFormatting()
             
             ForEach(concerts) { concert in
-                CustomListCellView(imageName: concert.profileImageName, title: concert.artist, subtitle: concert.venue)
+                CustomListCellView(imageName: concert.concertHeaderImageUrl, title: concert.artist, subtitle: concert.venue)
                     .anyButton {
                         onConcertPressed(concert: concert)
                     }
