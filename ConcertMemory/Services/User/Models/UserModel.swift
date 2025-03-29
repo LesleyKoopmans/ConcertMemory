@@ -70,7 +70,7 @@ struct UserModel: Codable, Identifiable, Hashable {
     
     static var mocks: [Self] {
         return [
-            UserModel(id: "mock_user_1", creationDate: .now, didCompleteOnboarding: true, profileImageUrl: Constants.randomImage),
+            UserModel(id: "mock_user_1", creationDate: .now, didCompleteOnboarding: true, profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/concertmemory-f3e4b.firebasestorage.app/o/concertImages%2FA40E24BC-7D4E-40D4-B315-6EB660F272DB.jpg?alt=media&token=64ae3ee5-ea6c-4aba-a781-8c8e648b933e"),
             UserModel(id: UUID().uuidString, creationDate: .now, didCompleteOnboarding: false, profileImageUrl: "https://picsum.photos/600/500"),
             UserModel(id: UUID().uuidString, creationDate: .now, didCompleteOnboarding: true, profileImageUrl: nil),
             UserModel(id: UUID().uuidString, creationDate: .now, didCompleteOnboarding: true, profileImageUrl: "https://picsum.photos/500/500")

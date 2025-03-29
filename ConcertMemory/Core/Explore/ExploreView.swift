@@ -9,24 +9,41 @@ import SwiftUI
 
 struct ExploreView: View {
     
-    let concert = ConcertModel.mock
-    @State private var recentConcerts: [ConcertModel] = ConcertModel.mocks
+    @Environment(ConcertManager.self) private var concertManager
+    @State private var recentConcerts: [ConcertModel] = []
     @State private var genres: [ConcertGenre] = ConcertGenre.allCases
-    @State private var popularConcerts: [ConcertModel] = ConcertModel.mocks
+    @State private var popularConcerts: [ConcertModel] = []
     
     @State private var path: [NavigationPathOption] = []
     
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                recentSection
+                if recentConcerts.isEmpty && popularConcerts.isEmpty {
+                    ProgressView()
+                        .padding(40)
+                        .frame(maxWidth: .infinity)
+                        .removeListRowFormatting()
+                }
                 
-                genreSection
+                if !recentConcerts.isEmpty {
+                    recentSection
+                }
                 
-                popularSection
+                if !popularConcerts.isEmpty {
+                    genreSection
+                    popularSection
+                }
+                
             }
             .navigationTitle("Explore")
             .navigationDestinationForCoreModule(path: $path)
+            .task {
+                await loadRecentConcerts()
+            }
+            .task {
+                await loadPopularConcerts()
+            }
         }
     }
     
@@ -95,6 +112,25 @@ struct ExploreView: View {
         }
     }
     
+    private func loadRecentConcerts() async {
+        guard recentConcerts.isEmpty else { return }
+        
+        do {
+            recentConcerts = try await concertManager.getRecentConcerts()
+        } catch {
+            print("Error loading recent concerts: \(error)")
+        }
+    }
+    
+    private func loadPopularConcerts() async {
+        guard popularConcerts.isEmpty else { return }
+        do {
+            popularConcerts = try await concertManager.getPopularConcerts()
+        } catch {
+            print("Error loading popular concerts: \(error)")
+        }
+    }
+    
     private func onConcertPressed(concert: ConcertModel) {
         path.append(.concert(concert: concert, concertId: concert.id))
     }
@@ -106,4 +142,5 @@ struct ExploreView: View {
 
 #Preview {
     ExploreView()
+        .environment(ConcertManager(service: MockConcertService()))
 }

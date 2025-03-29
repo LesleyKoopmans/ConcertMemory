@@ -10,7 +10,6 @@ import SwiftUI
 struct HeroCellView: View {
     
     var title: String? = "This is some title"
-    var subtitle: String? = "This is some subtitle that will go here."
     var imageUrl: String? = Constants.randomImage
     
     var body: some View {
@@ -29,10 +28,6 @@ struct HeroCellView: View {
                     if let title {
                         Text(title)
                             .font(.headline)
-                    }
-                    if let subtitle {
-                        Text(subtitle)
-                            .font(.subheadline)
                     }
                 }
                 .foregroundStyle(.white)
@@ -60,9 +55,6 @@ struct HeroCellView: View {
                 .frame(width: 200, height: 400)
             
             HeroCellView(title: nil)
-                .frame(width: 300, height: 200)
-            
-            HeroCellView(subtitle: nil)
                 .frame(width: 300, height: 200)
         }
         .frame(maxWidth: .infinity)

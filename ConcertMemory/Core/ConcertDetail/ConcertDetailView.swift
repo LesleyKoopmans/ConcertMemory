@@ -160,7 +160,7 @@ struct ConcertDetailView: View {
             ZStack {
                 if let mediaItems = concert.concertMedia {
                     CarouselView(items: mediaItems) { media in
-                        HeroCellView(title: "", subtitle: "", imageUrl: media)
+                        HeroCellView(title: nil, imageUrl: media)
                     }
                 }
             }

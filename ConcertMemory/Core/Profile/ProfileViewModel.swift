@@ -17,6 +17,7 @@ class ProfileViewModel: ObservableObject {
     }
     
     @Published var image: Image?
+    @Published var uiImage: UIImage?
     
     func loadImage(fromItem item: PhotosPickerItem?) async {
         guard let item = item else { return }
@@ -25,6 +26,7 @@ class ProfileViewModel: ObservableObject {
         
         guard let uiImage = UIImage(data: data) else { return }
         
+        self.uiImage = uiImage
         self.image = Image(uiImage: uiImage)
     }
 }

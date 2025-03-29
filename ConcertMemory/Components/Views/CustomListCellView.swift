@@ -11,7 +11,6 @@ struct CustomListCellView: View {
     
     var imageName: String? = Constants.randomImage
     var title: String? = "Atmosphere"
-    var subtitle: String? = "Underground Hiphop in de Melkweg."
     
     var body: some View {
         HStack(spacing: 8) {
@@ -32,11 +31,6 @@ struct CustomListCellView: View {
                     Text(title)
                         .font(.headline)
                 }
-                
-                if let subtitle = subtitle {
-                    Text(subtitle)
-                        .font(.subheadline)
-                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -54,8 +48,6 @@ struct CustomListCellView: View {
             CustomListCellView()
             CustomListCellView(imageName: nil)
             CustomListCellView(title: nil)
-            CustomListCellView(subtitle: nil)
         }
-        
     }
 }

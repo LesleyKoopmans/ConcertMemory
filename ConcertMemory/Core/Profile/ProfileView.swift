@@ -11,6 +11,8 @@ import PhotosUI
 struct ProfileView: View {
     
     @Environment(UserManager.self) private var userManager
+    @Environment(AuthManager.self) private var authManager
+    @Environment(ConcertManager.self) private var concertManager
     
     @State private var showSettingsView: Bool = false
     @State private var currentUser: UserModel?
@@ -47,6 +49,15 @@ struct ProfileView: View {
         .task {
             await loadData()
         }
+        .onChange(of: viewModel.uiImage) { _, image in
+            Task {
+                do {
+                    try await userManager.updateProfileImageUrl(user: currentUser!, image: viewModel.uiImage!)
+                } catch {
+                    
+                }
+            }
+        }
     }
 
     private var settingsButton: some View {
@@ -64,10 +75,10 @@ struct ProfileView: View {
                 if let loadedImage = viewModel.image {
                     loadedImage
                         .resizable()
-                }  else {
-                    ProfileImageView(onProfileImagePressed: {
+                } else {
+                    ProfileImageView(imageName: currentUser?.profileImageUrl ?? nil) {
                         onImagePickerButtonPressed()
-                    })
+                    }
                 }
             }
             .anyButton {
@@ -95,8 +106,6 @@ struct ProfileView: View {
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .removeListRowFormatting()
-               
-                
             } else {
                 ForEach(myConcerts, id: \.self) { concert in
                     CustomListCellView(
@@ -127,6 +136,20 @@ struct ProfileView: View {
         }
 
     }
+    
+    private func loadData() async {
+        self.currentUser = userManager.currentUser
+        
+        do {
+            let uid = try authManager.getAuthId()
+            myConcerts = try await concertManager.getConcertsForAuthor(userId: uid)
+            
+        } catch {
+            print("Failed to load user concerts: \(error)")
+        }
+        
+        isLoading = false
+    }
 
     private func onSettingsButtonPressed() {
         showSettingsView = true
@@ -145,13 +168,6 @@ struct ProfileView: View {
         myConcerts.remove(at: index)
     }
     
-    private func loadData() async {
-        self.currentUser = userManager.currentUser
-        try? await Task.sleep(for: .seconds(5))
-        isLoading = false
-        myConcerts = ConcertModel.mocks
-    }
-    
     private func onConcertPressed(concert: ConcertModel) {
         path.append(.concert(concert: concert, concertId: concert.id))
     }
@@ -161,4 +177,6 @@ struct ProfileView: View {
     ProfileView()
         .environment(AppState())
         .environment(UserManager(services: MockUserServices(user: .mock)))
+        .environment(AuthManager(service: MockAuthService(user: .mock())))
+        .environment(ConcertManager(service: MockConcertService()))
 }

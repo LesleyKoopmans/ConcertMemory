@@ -69,6 +69,10 @@ class UserManager {
         signOut()
     }
     
+    func updateProfileImageUrl(user: UserModel, image: UIImage) async throws {
+        try await remote.updateProfileImageUrl(user: user, image: image)
+    }
+    
     private func currentUserId() throws -> String {
         guard let uid = currentUser?.id else {
             throw UserManagerError.noUserId

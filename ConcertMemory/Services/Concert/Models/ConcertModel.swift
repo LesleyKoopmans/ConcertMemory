@@ -5,8 +5,9 @@
 //  Created by Lesley Koopmans on 05/03/2025.
 //
 import Foundation
+import IdentifiableByString
 
-struct ConcertModel: Identifiable, Hashable, Codable {
+struct ConcertModel: Identifiable, Hashable, Codable, StringIdentifiable {
     let id: String
     let artist: String?
     let description: String?
@@ -81,10 +82,10 @@ struct ConcertModel: Identifiable, Hashable, Codable {
     
     static var mocks: [Self] {
         [
-            ConcertModel(id: UUID().uuidString, artist: "Atmosphere", description: "Na ze in totaal 6x te hebben gezien vallen ze nog steeds niet tegen. Elke keer weten ze weer te verassen met nieuwe versies van de bekende nummers. Alle oude klasiekers kwamen zoals gebruikelijk langs.", instruments: [Instrument.microphone: "Henk", Instrument.keys: "Joop", Instrument.guitar: "Pieter"], rating: 4, concertGenre: .hiphop, venue: "Melkweg", room: "Kleine zaal", concertHeaderImageUrl: Constants.randomImage, concertMedia: [Constants.randomImage, "https://picsum.photos/600/500", "https://picsum.photos/500/600", "https://picsum.photos/500/500", "https://picsum.photos/600/650"], authorId: "mock_user_1", withUid: UserModel.mocks, concertDate: .now, dateCreated: .now),
+            ConcertModel(id: UUID().uuidString, artist: "Atmosphere", description: "Na ze in totaal 6x te hebben gezien vallen ze nog steeds niet tegen. Elke keer weten ze weer te verassen met nieuwe versies van de bekende nummers. Alle oude klasiekers kwamen zoals gebruikelijk langs.", instruments: [Instrument.microphone: "Henk", Instrument.keys: "Joop", Instrument.guitar: "Pieter"], rating: 2, concertGenre: .hiphop, venue: "Melkweg", room: "Kleine zaal", concertHeaderImageUrl: Constants.randomImage, concertMedia: [Constants.randomImage, "https://picsum.photos/600/500", "https://picsum.photos/500/600", "https://picsum.photos/500/500", "https://picsum.photos/600/650"], authorId: "mock_user_1", withUid: UserModel.mocks, concertDate: .now, dateCreated: .now),
             ConcertModel(id: UUID().uuidString, artist: "Robert Jon & The Wreck", rating: 4, concertGenre: .rock, venue: "Burgerweeshuis", concertHeaderImageUrl: Constants.randomImage, concertMedia: [Constants.randomImage, "https://picsum.photos/600/500", "https://picsum.photos/500/600", "https://picsum.photos/500/500", "https://picsum.photos/600/650"], authorId: "user_1", withUid: [UserModel.mock], concertDate: .now, dateCreated: .now),
             ConcertModel(id: UUID().uuidString, artist: "The Roots", description: "Een van de weinige acts die nog op de verlanglijst stond. Twee uur lang speelden ze aaneengesloten, ze hadden amper geduld om applaus te incaseren. De band bestond uit 7 leden waarbij iedereen aan goed tot z'n recht kwam.", rating: 4.5, concertGenre: .hiphop, venue: "Paradiso", room: "Grote zaal", concertHeaderImageUrl: Constants.randomImage, concertMedia: [Constants.randomImage, "https://picsum.photos/600/500", "https://picsum.photos/500/600", "https://picsum.photos/500/500", "https://picsum.photos/600/650"], authorId: "user_1", withUid: [UserModel.mock, UserModel.mocks[1]], concertDate: .now, dateCreated: .now),
-            ConcertModel(id: UUID().uuidString, artist: "Dawn Brothers", concertGenre: .soul, venue: "Metropool", room: "Bud zaal", concertHeaderImageUrl: Constants.randomImage, concertMedia: [Constants.randomImage, "https://picsum.photos/600/500", "https://picsum.photos/500/600", "https://picsum.photos/500/500", "https://picsum.photos/600/650"], authorId: "user_2", withUid: nil, concertDate: .now, dateCreated: .now)
+            ConcertModel(id: UUID().uuidString, artist: "Dawn Brothers", rating: 10, concertGenre: .soul, venue: "Metropool", room: "Bud zaal", concertHeaderImageUrl: Constants.randomImage, concertMedia: [Constants.randomImage, "https://picsum.photos/600/500", "https://picsum.photos/500/600", "https://picsum.photos/500/500", "https://picsum.photos/600/650"], authorId: "user_2", withUid: nil, concertDate: .now, dateCreated: .now)
         ]
     }
 }

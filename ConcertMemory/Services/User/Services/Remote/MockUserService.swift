@@ -4,7 +4,7 @@
 //
 //  Created by Lesley Koopmans on 29/03/2025.
 //
-
+import SwiftUI
 
 struct MockUserService: RemoteUserService {
     
@@ -33,4 +33,9 @@ struct MockUserService: RemoteUserService {
     func markOnboardingCompleted(userId: String) async throws {
         
     }
+    
+    func updateProfileImageUrl(user: UserModel, image: UIImage) async throws {
+        
+    }
+    
 }
